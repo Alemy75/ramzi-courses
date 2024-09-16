@@ -1,3 +1,5 @@
+from .serializers import UserSerializer
+from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate, login, logout
 from rest_framework import status
 from rest_framework.response import Response
@@ -24,3 +26,12 @@ class LogoutView(APIView):
     def post(self, request, format=None):
         logout(request)
         return Response(status=status.HTTP_200_OK)
+
+
+class UserView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
