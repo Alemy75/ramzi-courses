@@ -1,0 +1,11 @@
+{
+  "extends": "standard",
+  "rules": {
+    "quotes": [
+      "error",
+      "double",
+      { "avoidEscape": true, "allowTemplateLiterals": false }
+    ],
+    "semi": ["error", "always"]
+  }
+}
