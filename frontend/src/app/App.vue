@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { request } from "./request";
+import { request } from "@/shared/api";
 
 const username = ref("");
 const password = ref("");
 
 const getUser = async () => {
   await request({
-    url: "http://127.0.0.1:8000/api/main/user/",
+    url: "/api/main/user/",
     method: "GET"
   });
 };
 
 const onSubmit = async () => {
-  await request({
+  const { data } = await request({
     url: "http://127.0.0.1:8000/api/main/login/",
     method: "POST",
     data: {
@@ -21,6 +21,9 @@ const onSubmit = async () => {
       username: username.value
     }
   });
+
+  localStorage.setItem("accesstoken", data.access);
+  localStorage.setItem("refreshtoken", data.refreshtoken);
 
   await getUser();
 };

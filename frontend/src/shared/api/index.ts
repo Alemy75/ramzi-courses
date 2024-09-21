@@ -10,10 +10,12 @@ export const request = <T = any, D = any>({
   axios<T>({
     url,
     method,
-    headers,
     params,
     data,
-    withCredentials: true,
     xsrfCookieName: "csrftoken",
-    xsrfHeaderName: "X-CSRFToken"
+    xsrfHeaderName: "X-CSRFToken",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
+      ...headers
+    }
   });
